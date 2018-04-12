@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+	<appender name="console" class="ch.qos.logback.core.ConsoleAppender">
+		<encoder>
+			<pattern>%date{YYYY-MM-dd HH:mm:ss.SSS} [%thread] %-5level %logger{36} - %msg%n</pattern>
+		</encoder>
+	</appender>
+
+	<appender name="rollingFile" class="ch.qos.logback.core.rolling.RollingFileAppender">
+		<file>logs/es-data.log</file>
+		<rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+			<fileNamePattern>logs/base.%d{yyyy-MM-dd}.log</fileNamePattern>
+            <!--<maxHistory>6</maxHistory>-->
+		</rollingPolicy>
+		<encoder charset="UTF-8">
+			<pattern>%date{HH:mm:ss.SSS} [%thread] %-5level %logger{36} - %msg%n</pattern>
+		</encoder>
+	</appender>
+	
+	<!--方法开始结束时间日志  -->
+	<appender name="timeFile" class="ch.qos.logback.core.rolling.RollingFileAppender">
+		<file>logs/time.log</file>
+		<rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+			<fileNamePattern>logs/base.time%d{yyyy-MM-dd}.log</fileNamePattern>
+            <!--<maxHistory>6</maxHistory>-->
+		</rollingPolicy>
+		<encoder charset="UTF-8">
+			<pattern>%date{HH:mm:ss.SSS} [%thread] %msg%n</pattern>
+		</encoder>
+	</appender>
+		<appender name="paramsFile" class="ch.qos.logback.core.rolling.RollingFileAppender">
+		<file>logs/params.log</file>
+		<rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+			<fileNamePattern>logs/base.time%d{yyyy-MM-dd}.log</fileNamePattern>
+            <!--<maxHistory>6</maxHistory>-->
+		</rollingPolicy>
+		<encoder charset="UTF-8">
+			<pattern>%date{HH:mm:ss.SSS} [%thread] %msg%n</pattern>
+		</encoder>
+	</appender>
+	
+	
+	<appender name="errorAppender" class="ch.qos.logback.core.rolling.RollingFileAppender">  
+    <file>logs/error.log</file>  
+    <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">  
+        <fileNamePattern>logs/base.%d{yyyy-MM-dd}error.log</fileNamePattern>  
+    </rollingPolicy>  
+    <encoder>  
+        <pattern>%date{HH:mm:ss.SSS} [%thread] %-5level %logger{36} - %msg%n</pattern>
+    </encoder>  
+    <filter class="ch.qos.logback.classic.filter.LevelFilter"><!-- 只打印错误日志 -->  
+        <level>ERROR</level>  
+        <onMatch>ACCEPT</onMatch>  
+        <onMismatch>DENY</onMismatch>  
+    </filter>  
+</appender> 
+
+	<!-- project default level -->
+	<logger name="com.yeesight" level="INFO" />
+	
+	<logger name="com.tmxmall.publicsafety.aop.InterfaceTimeAop" level="INFO" additivity="false">
+		 <appender-ref ref="timeFile" />  
+	</logger>
+	<logger name="com.tmxmall.publicsafety.aop.EsInputParamsAop" level="INFO" additivity="false">
+		 <appender-ref ref="paramsFile" />  
+	</logger>
+	
+	<!--log4jdbc -->
+	<logger name="jdbc.sqltiming" level="INFO"/>
+
+	<root level="INFO">
+		<appender-ref ref="console" />
+		<appender-ref ref="rollingFile" />
+		<appender-ref ref="errorAppender" />  
+	</root>
+</configuration>

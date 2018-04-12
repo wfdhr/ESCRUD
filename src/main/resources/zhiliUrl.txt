@@ -1,0 +1,11 @@
+﻿http://172.31.187.175:8888/NameRecognition/servle
+http://172.31.187.175:8888/NameRecognition/servle
+http://172.31.187.176:8888/NameRecognition/servle
+http://172.31.187.176:8888/NameRecognition/servle
+http://47.52.18.154:8080/NameRecognition/servle
+http://47.52.18.154:8080/NameRecognition/servle
+http://47.90.120.241:8080/NameRecognition/servle
+http://47.90.120.241:8080/NameRecognition/servle
+http://120.27.14.60:8888/NameRecognition/servle
+http://121.42.35.187:8888/NameRecognition/servle
+http://121.42.35.187:8888/NameRecognition/servle

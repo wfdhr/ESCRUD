@@ -1,0 +1,116 @@
+package com.tmxmall.publicsafety.utils;
+
+import java.io.IOException;
+import java.io.StringReader;
+import java.util.ArrayList;
+
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
+import javax.xml.parsers.ParserConfigurationException;
+
+import org.w3c.dom.Document;
+import org.w3c.dom.Element;
+import org.w3c.dom.Node;
+import org.w3c.dom.NodeList;
+import org.xml.sax.InputSource;
+import org.xml.sax.SAXException;
+
+import net.sf.json.JSONObject;
+
+
+public class ReadXmlString {
+	public static ArrayList<String[]> readXml(String json) {
+
+		try{
+		JSONObject jsonObject = JSONObject.fromObject(json);
+		if (jsonObject==null)
+			return null;
+		String xml = jsonObject.getString("result");
+		if (xml.indexOf("<NIG>") == -1) {
+			System.out.println("接口返回数据为空");
+			return null;
+		} else {
+			xml = xml.split("</NIG>")[0] + "</NIG>";
+		}
+		//xml转义
+		xml = xml.replaceAll("&", "&amp;");
+		xml = xml.replaceAll("/TITLE>", "<\\/TITLE>");
+		xml = xml.replaceAll("<<\\/TITLE>", "<\\/TITLE>");
+		// String xml =
+		// "<?xml version=\"1.0\" encoding=\"GB2312\"?>\n<NIG>\n<ARTICLE>\n\t<UUID>301474863093130F5D5B7CF36A6F4BA</UUID>\n\t<URL>http://china.qianlong.com/2016/0926/961834.shtml</URL>\n<TITLE>G20杭州峰会主场馆对公众开放（组图）</TITLE>\n<PUBDATE>2016-09-26 08:26:00</PUBDATE>\n<KEYWORDS>峰会(5) 主场(4) 杭州(4) 开放(2) 对公(1) 公众(1) 拍摄(1) 博览(1) 午宴(1) 举办地(1) </KEYWORDS><SUMMARY>9月 25日拍摄的 G20杭州峰会主场馆午宴厅 。当日起 ，G20杭州峰会主场馆 ——杭州国际博览中心向社会开放 。公众可以参观峰会举办地原貌 ，体验会场恢弘的建筑外观与婉约的室内空间 。据了解 ，峰会主场馆的门票按照 150元 （散客 ）、120元 （网购 ）、100元 （团体 ）的票价销售 。新华社记者黄宗治摄</SUMMARY><CATEGORYID>7</CATEGORYID><COUNTRYNAMEEN>China</COUNTRYNAMEEN><COUNTRYNAMEZH>中国</COUNTRYNAMEZH><CITYEN>BeiJing</CITYEN><CITYZH>北京</CITYZH><MEDIANAMEEN>太仓新闻网-首页</MEDIANAMEEN><MEDIANAMEZH>太仓新闻网-首页</MEDIANAMEZH><LANGUAGECODE>zh</LANGUAGECODE><LANGUAGETNAME>中文</LANGUAGETNAME><LONGITUDE>117.17</LONGITUDE><LATITUDE>31.52</LATITUDE><TRANSFER>12</TRANSFER><SENTIMENTID>1</SENTIMENTID><MEDIALEVEL>4</MEDIALEVEL>\n\t<REPEAT_COUNT>96</REPEAT_COUNT>\n\t<RELATIVE_UUID>101474860069610E782EA792113D4A8|951474856456295FBAD993DFE1B9E1F|701474864113370A960E13268A0689F|551474866178355E782EA792113D4A8|601474858746060E782EA792113D4A8|23147485293902358F33D2F4F5A2A1D|791474856133279712B0A7181B93E5D|721474864802172712B0A7181B93E5D|141474865843714F5D5B7CF36A6F4BA|671474864106367712B0A7181B93E5D|41147485907734158F33D2F4F5A2A1D|70147481780317058F33D2F4F5A2A1D|43147486480124358F33D2F4F5A2A1D|26147485974092658F33D2F4F5A2A1D|1014748627451018787BB427BBDE24D|30147485517193058F33D2F4F5A2A1D|49147485262104958F33D2F4F5A2A1D|441474859739344A49DA17CBB25BF1E|501474837587650EBF2F1646D42248A|991474852621099FE60C58A325CB2F5|1714748317215176DA3BCA0DDBD30D6|3814748529366387C201FDE5800AD75|59147483635145958F33D2F4F5A2A1D|72147483295197262DAE133366387DA|67147483820946705E6445FDFE979E8|53147483852055305E6445FDFE979E8|5514748472504557FB96E7B372B149C|30147484038010333288636499C61C7|54147480618755485E0612CDF02A90A|22147485808022266C56DDFC0456B6D|601474851669006CDD6879BF20BAA27|3914748526196396DCC3440A5DFFC36|9114748580863911F7CBF6A8DA4217F|1614748516676163A646C5BA0643B4B|651474845367565603941700CDAECF0|291474811803729BE5812086A0BD25A|261474865475726E08675E66E5F4205|161474856136616E5E1D74831C257C7|141474865479914AC745534A28A86EC|261474836969526EC600F140DA322B7|111474841936611EC600F140DA322B7|271474816136327F8114F876E827257|301474857437930AC745534A28A86EC|50147486106615058F33D2F4F5A2A1D|20147480980932088FF8D681F8F4DC0|961474861745296FC2C4E9F8BF808AF|131474865145313FC0493ED39C9079C|31147483696953121C5D82B32C9DE54|83147485974238381CE0585FFBDB37C|1014748088199106E47869A0319D39D|8014748088199081FEAF3BF98094902|60147480552916061FF65B255F778DF|431474802907843430495850E5AE25A|371474800967137D34C512DB38B6A0F|66147481346576655942F58E631C9AD|38147480323623870DAE07A1F6D5C0B|191474803564919719E1BC771B72BA9|111474805531711AA8E063DC891F961|36147480651793636772F73D7E7C5C6|8914748094796892A9D75572E3635F8|491474811471849E9067ED70046D70E|2114748042176211F8B861265AE5133|911474810142491CDE3895817B18C5E|1914748108086190241C0AA06371256|831474799673683FEF06AB506B3062A|56147481180515641085073DA20ECC4|811474803235981811194F533148188|401474861064840347DE4D727F18F87|17147485325521791D39C98B51DE00C|741474846934374DDFAE0059FE6105A|971474856776897BC52A8A863700D4A|8914748637771890F494D9B992651A2|60147485709956018160F13AAF6F3CC|941474823759994BC68DD2BC8C8FD2E|821474858081882E3D900F09B3CBB4A|701474859414570EC223F69D3C4C39B|7814748450538785C31F0AD134BFD5D|761474850085676678B4FF6CF4D6C55|291474860068929700D3629EBBF0F15|95147485549339515B536B08557AC04|91147485549339169ED0EE44A460DFF|941474864452594459B81F33C23EC8D|21147485040432114D1D69802540C8B|27147485908072714799A07D7F665E1|39147483264413954A661E786240DB3|701474841624807DD91E2B9DD916F00</RELATIVE_UUID>\n</ARTICLE>\n</NIG>";
+		try {
+			DocumentBuilderFactory factory = DocumentBuilderFactory
+					.newInstance();
+			DocumentBuilder builder = factory.newDocumentBuilder();
+			Document doc = builder
+					.parse(new InputSource(new StringReader(xml)));
+			// 获取根节点
+			Element e = doc.getDocumentElement();
+			// 获取2级article节点列表
+			NodeList nl = e.getElementsByTagName("ARTICLE");
+			ArrayList<String[]> results = new ArrayList<String[]>();
+//			ClusterResult cr= new ClusterResult();
+//			article[] articleArr = new article[nl.getLength()];
+			
+			for (int i = 0; i < nl.getLength(); i++) {
+				Node n = nl.item(i);
+				// 获取article子节点列表
+				NodeList nlc = n.getChildNodes();
+				String[] result = new String[5];
+				// 通过遍历article子标签获取标签内容
+				for (int j = 0; j < nlc.getLength(); j++) {
+
+					Node cn = nlc.item(j);
+
+					if (cn.getNodeName().equals("UUID")) {
+//						System.out.println("UUID : " + cn.getTextContent());
+						result[0] = cn.getTextContent();
+					}
+					if (cn.getNodeName().equals("REPEAT_COUNT")) {
+						result[1] = cn.getTextContent();
+					}
+					
+					if (cn.getNodeName().equals("RELATIVE_UUID")) {
+						result[2] = cn.getTextContent();
+					}
+					if (cn.getNodeName().equals("KEYWORDS")) {
+						result[3] = cn.getTextContent();
+					}
+					if (cn.getNodeName().equals("TITLE")) {
+						result[4] = cn.getTextContent();
+						
+					}
+
+
+				}
+				results.add(result);
+				
+			}
+			System.out.println("话题分析出参:" + results.toString());
+			return results;
+		} catch (SAXException e) {
+			// TODO Auto-generated catch block
+			System.out.println("cluster; "+e.getMessage());
+			return null;
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			System.out.println("cluster:"+e.getMessage());
+			return null;
+		} catch (ParserConfigurationException e) {
+			// TODO Auto-generated catch block
+			System.out.println("cluster "+e.getMessage());
+			return null;
+		}catch(Exception e){
+			System.out.println("cluster "+e.getMessage());
+			return null;
+		}
+		
+		}catch(Exception e){
+			System.out.println("cluster error when getting xml:  "+e.getMessage());
+			return null;
+			
+		}
+
+	}
+
+}
