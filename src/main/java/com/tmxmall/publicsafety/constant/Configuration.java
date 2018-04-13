@@ -4,7 +4,6 @@ import java.util.Properties;
 
 public class Configuration
 {
-sss
   public static String INDEX_SERVER_ADDRESS = "";
   public static String CLUSTER_NAME;
   public static String TOTAL_INDEX_SERVER_ADDRESS = "";
