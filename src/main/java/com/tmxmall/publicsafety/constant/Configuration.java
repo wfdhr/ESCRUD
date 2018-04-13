@@ -1,6 +1,5 @@
 package com.tmxmall.publicsafety.constant;
 
-import java.util.Properties;
 
 public class Configuration
 {

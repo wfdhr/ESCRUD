@@ -52,7 +52,6 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
-import com.google.gson.JsonArray;
 import com.tmxmall.publicsafety.constant.Configuration;
 import com.tmxmall.publicsafety.domain.PublicSafetySearchDao;
 import com.tmxmall.publicsafety.service.ConfigPropertiesForEsData;
