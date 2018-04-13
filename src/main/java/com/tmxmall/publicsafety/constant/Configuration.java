@@ -6,9 +6,6 @@ public class Configuration
 {
 
 
-  public static int TITLE_SRC_WEIGHT = 100;
-  public static int TITLE_WEIGHT = 10;
-  public static int TEXT_WEIGHT = 2;
   public static int MEDIA_WEIGHT = 10;
   public static long BASE_TIME = 1413000000000L;
   public static String TIME_WEIGHT = "0.00000000001";
