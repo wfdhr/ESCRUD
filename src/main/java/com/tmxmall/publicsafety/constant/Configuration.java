@@ -5,7 +5,7 @@ import java.util.Properties;
 public class Configuration
 {
 
-  public static int SEARCH_TYPE = 0;
+
   public static int TITLE_SRC_WEIGHT = 100;
   public static int TITLE_WEIGHT = 10;
   public static int TEXT_WEIGHT = 2;
