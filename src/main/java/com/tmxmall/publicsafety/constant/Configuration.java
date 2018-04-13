@@ -4,23 +4,6 @@ import java.util.Properties;
 
 public class Configuration
 {
-  public static String TEST = "";
-  public static String INDEX_SERVER_ADDRESS = "";
-  public static String CLUSTER_NAME;
-  public static String TOTAL_INDEX_SERVER_ADDRESS = "";
-  public static String TOTAL_CLUSTER_NAME;
-  public static String INDEX_NAME;
-  public static String INDEX_TYPE_ARTICLE;
-  public static String COMMON_INDEX_NAME;
-  public static String INDEX_TYPE_MEDIA;
-  public static String SOCIALITY_INDEX_NAME;
-  public static String SOCIALITY_INDEX_TYPE_WEIBO;
-  public static String SOCIALITY_INDEX_TYPE_WEIBO_COMMENT;
-  public static String PRODUCT_INDEX_NAME;
-  public static String PRODUCT_INDEX_TYPE_COMMENT;
-  public static String PRODUCT_INDEX_TYPE_PRODUCT;
-  public static String PRODUCT_INDEX_TYPE_COMPANY;
-  public static float QUERY_RESULT_MIN_SCORE = 1.0F;
 
   public static int SEARCH_TYPE = 0;
   public static int TITLE_SRC_WEIGHT = 100;
